@@ -1,28 +1,28 @@
-# Build results
-bin/
-obj/
-*.exe
-*.dll
-*.pdb
-
-# Visual Studio
-.vs/
-*.user
-*.sln.docstates
-
 # IDE
 .vscode/
+.idea/
 *.swp
 *.swo
 *~
 
-# Dependencies
-packages/
-*.nupkg
-
-# OS files
+# OS
 .DS_Store
 Thumbs.db
 
+# Build
+dist/
+build/
+node_modules/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
 # Logs
 *.log
+npm-debug.log*
+
+# Cache
+.cache/
+.parcel-cache/

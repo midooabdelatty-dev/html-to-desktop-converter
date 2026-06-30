@@ -1,0 +1,1573 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔗 أداة ربط الملفات البرمجية - Educational Platform</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabler-icons@latest/tabler-icons.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --primary: #3b82f6;
+            --primary-dark: #1e40af;
+            --secondary: #8b5cf6;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --dark-bg: #0f172a;
+            --card-bg: #1e293b;
+            --border: #334155;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 14px;
+        }
+
+        html, body {
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            font-family: 'Segoe UI', 'Tajawal', 'Cairo', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        body {
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+            background-attachment: fixed;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* ============ Header ============ */
+        header {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+            animation: slideDown 0.6s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header-content h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .header-content p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .header-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .stat-box {
+            background: var(--card-bg);
+            padding: 1rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .stat-box .number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .stat-box .label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 0.3rem;
+        }
+
+        /* ============ Navigation ============ */
+        .nav-container {
+            margin-bottom: 2.5rem;
+        }
+
+        .nav-label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+        }
+
+        .lang-tabs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .lang-tab {
+            padding: 0.85rem 1rem;
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-md);
+            background: transparent;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .lang-tab:hover {
+            border-color: var(--primary);
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .lang-tab.active {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(139, 92, 246, 0.15));
+            color: var(--primary);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
+        }
+
+        .method-tabs {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            padding: 0.75rem;
+            background: var(--card-bg);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+            overflow-x: auto;
+        }
+
+        .tab {
+            padding: 0.75rem 1.25rem;
+            border: 1px solid transparent;
+            border-radius: var(--radius-md);
+            background: transparent;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .tab:hover {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--text-primary);
+        }
+
+        .tab.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* ============ Card ============ */
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            animation: fadeIn 0.5s ease;
+            transition: all 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 10px 40px rgba(59, 130, 246, 0.1);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .card-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .card-title h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 0.9rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.8rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .badge-primary {
+            background: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
+        }
+
+        .badge-success {
+            background: rgba(16, 185, 129, 0.2);
+            color: #34d399;
+        }
+
+        .badge-warning {
+            background: rgba(245, 158, 11, 0.2);
+            color: #fbbf24;
+        }
+
+        .badge-secondary {
+            background: rgba(139, 92, 246, 0.2);
+            color: #c4b5fd;
+        }
+
+        .card-desc {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: rgba(59, 130, 246, 0.05);
+            border-radius: var(--radius-md);
+            border-left: 3px solid var(--primary);
+        }
+
+        /* ============ Code Section ============ */
+        .code-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .code-section-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .files-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .files-grid.one-col {
+            grid-template-columns: 1fr;
+        }
+
+        .file-box {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .file-box:hover {
+            border-color: var(--primary);
+            background: rgba(15, 23, 42, 0.95);
+        }
+
+        .file-header {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .file-name {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary);
+        }
+
+        .code-block {
+            position: relative;
+        }
+
+        pre {
+            background: rgba(15, 23, 42, 0.95);
+            padding: 1rem;
+            font-size: 0.85rem;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            color: var(--text-primary);
+            overflow-x: auto;
+            line-height: 1.65;
+            white-space: pre;
+            margin: 0;
+            border-radius: var(--radius-md);
+        }
+
+        pre::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        pre::-webkit-scrollbar-track {
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        pre::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 3px;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            background: rgba(59, 130, 246, 0.2);
+            border: 1px solid var(--primary);
+            border-radius: var(--radius-sm);
+            color: var(--primary);
+            cursor: pointer;
+            font-size: 0.8rem;
+            opacity: 0;
+            transition: all 0.2s;
+        }
+
+        .file-box:hover .copy-btn {
+            opacity: 1;
+        }
+
+        .copy-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* ============ Terminal ============ */
+        .terminal-section {
+            margin-top: 1.5rem;
+        }
+
+        .run-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            border: 1px solid var(--primary);
+            border-radius: var(--radius-md);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .run-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+        }
+
+        .run-btn:active {
+            transform: translateY(0);
+        }
+
+        .terminal {
+            background: #0f172a;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 1.25rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            color: #10b981;
+            margin-top: 1rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, opacity 0.3s ease;
+            opacity: 0;
+            line-height: 1.8;
+        }
+
+        .terminal.show {
+            max-height: 400px;
+            opacity: 1;
+        }
+
+        .terminal-line {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .prompt {
+            color: #3b82f6;
+            font-weight: 600;
+        }
+
+        .output {
+            color: #cbd5e1;
+            margin-top: 0.5rem;
+        }
+
+        /* ============ Tips & Warnings ============ */
+        .tip-box {
+            border-radius: var(--radius-md);
+            padding: 1rem;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-top: 1rem;
+            border-left: 4px solid;
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .tip-box i {
+            flex-shrink: 0;
+            font-size: 1.2rem;
+        }
+
+        .tip-primary {
+            background: rgba(59, 130, 246, 0.1);
+            border-color: var(--primary);
+            color: #60a5fa;
+        }
+
+        .tip-warning {
+            background: rgba(245, 158, 11, 0.1);
+            border-color: var(--warning);
+            color: #fbbf24;
+        }
+
+        .tip-success {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: var(--success);
+            color: #34d399;
+        }
+
+        .tip-danger {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: var(--danger);
+            color: #f87171;
+        }
+
+        /* ============ Directory Tree ============ */
+        .tree-structure {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 1rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            overflow-x: auto;
+        }
+
+        .tree-structure pre {
+            background: transparent;
+            padding: 0;
+            color: inherit;
+            border-radius: 0;
+        }
+
+        /* ============ Ask Button ============ */
+        .ask-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.25rem;
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-md);
+            background: transparent;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            margin-top: 1rem;
+        }
+
+        .ask-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        /* ============ Responsive ============ */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .header-content h1 {
+                font-size: 1.8rem;
+            }
+
+            .lang-tabs {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .files-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card {
+                padding: 1.25rem;
+            }
+        }
+
+        /* ============ Animations ============ */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .loading {
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="header-content">
+                <h1><i class="ti ti-link"></i> أداة ربط الملفات البرمجية</h1>
+                <p>منصة تعليمية شاملة لفهم كيفية ربط الملفات وتشغيل المشاريع في جميع اللغات والتقنيات</p>
+                <div class="header-stats">
+                    <div class="stat-box">
+                        <div class="number">8+</div>
+                        <div class="label">لغات برمجية</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="number">30+</div>
+                        <div class="label">طريقة ربط</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="number">100+</div>
+                        <div class="label">أمثلة عملية</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <div class="nav-container">
+            <label class="nav-label"><i class="ti ti-code"></i> اختر اللغة أو التقنية</label>
+            <div class="lang-tabs" id="langTabs"></div>
+            <label class="nav-label" style="margin-top: 2rem;"><i class="ti ti-list"></i> طرق الربط</label>
+            <div class="method-tabs" id="methodTabs"></div>
+        </div>
+
+        <!-- Content -->
+        <div id="content"></div>
+    </div>
+
+    <script>
+        const data = {
+            python: {
+                methods: [
+                    {
+                        id: "import",
+                        label: "import مباشر",
+                        badge: "badge-primary",
+                        badgeText: "⭐ الأكثر شيوعًا",
+                        desc: "الطريقة الأساسية لاستيراد ملفات Python من نفس المجلد أو من مجلدات أخرى.",
+                        files: [
+                            {
+                                name: "math_utils.py",
+                                code: `def add(a, b):
+    """دالة الجمع"""
+    return a + b
+
+def multiply(a, b):
+    """دالة الضرب"""
+    return a * b
+
+def divide(a, b):
+    if b == 0:
+        raise ValueError("لا يمكن القسمة على صفر")
+    return a / b`
+                            },
+                            {
+                                name: "main.py",
+                                code: `import math_utils
+
+# استخدام الدوال
+result1 = math_utils.add(5, 3)
+result2 = math_utils.multiply(4, 7)
+
+print(f"الجمع: {result1}")     # الجمع: 8
+print(f"الضرب: {result2}")     # الضرب: 28
+
+try:
+    result3 = math_utils.divide(10, 2)
+    print(f"القسمة: {result3}") # القسمة: 5.0
+except ValueError as e:
+    print(f"خطأ: {e}")`
+                            }
+                        ],
+                        tree: `project/
+├── math_utils.py
+└── main.py`,
+                        runCmd: "python main.py",
+                        output: "الجمع: 8\nالضرب: 28\nالقسمة: 5.0",
+                        tip: "⚡ الملفات لازم تكون في نفس المجلد عشان import يشتغل مباشرة بدون أي إعدادات إضافية.",
+                        tipClass: "tip-warning"
+                    },
+                    {
+                        id: "from",
+                        label: "from...import",
+                        badge: "badge-success",
+                        badgeText: "📍 أكثر دقة",
+                        desc: "استيراد دوال أو متغيرات معينة من الملف بدلاً من استيراد الملف كله.",
+                        files: [
+                            {
+                                name: "utils.py",
+                                code: `def greet(name):
+    """دالة الترحيب"""
+    return f"مرحبًا، {name}!"
+
+def farewell(name):
+    return f"في الحفاظ الله يا {name}"
+
+DEFAULT_LANG = "ar"`
+                            },
+                            {
+                                name: "app.py",
+                                code: `from utils import greet, DEFAULT_LANG
+
+# استخدام المستورد فقط
+message = greet("أحمد")
+print(message)           # مرحبًا، أحمد!
+print(f"اللغة: {DEFAULT_LANG}")  # اللغة: ar`
+                            }
+                        ],
+                        tree: `project/
+├── utils.py
+└── app.py`,
+                        runCmd: "python app.py",
+                        output: "مرحبًا، أحمد!\nاللغة: ar",
+                        tip: "⚡ هذه الطريقة أفضل للأداء - بتستورد الجزء اللي محتاجه بس وليس كل الملف.",
+                        tipClass: "tip-success"
+                    },
+                    {
+                        id: "package",
+                        label: "Packages و __init__.py",
+                        badge: "badge-secondary",
+                        badgeText: "📦 مشاريع كبيرة",
+                        desc: "عندما يكون لديك هيكل متعدد المستويات، استخدم __init__.py لتحويل المجلدات إلى packages.",
+                        files: [
+                            {
+                                name: "mypackage/__init__.py",
+                                code: `# هذا الملف يخبر Python أن المجلد ده package
+# يمكنك ترك هذا الملف فارغًا أو إضافة imports
+
+from .helpers import format_name
+from .database import connect_db
+
+__version__ = "1.0.0"
+__author__ = "Ahmed"`
+                            },
+                            {
+                                name: "mypackage/helpers.py",
+                                code: `def format_name(name):
+    """تنسيق الاسم بشكل صحيح"""
+    return name.title()
+
+def validate_email(email):
+    return "@" in email`
+                            },
+                            {
+                                name: "main.py",
+                                code: `from mypackage.helpers import format_name
+from mypackage import __version__
+
+name = format_name("ahmed ali")
+print(f"الاسم: {name}")      # الاسم: Ahmed Ali
+print(f"الإصدار: {__version__}")  # الإصدار: 1.0.0`
+                            }
+                        ],
+                        tree: `project/
+├── main.py
+├── mypackage/
+│   ├── __init__.py
+│   ├── helpers.py
+│   └── database.py
+└── tests/`,
+                        runCmd: "python main.py",
+                        output: "الاسم: Ahmed Ali\nالإصدار: 1.0.0",
+                        tip: "⚡ __init__.py بيحول المجلد إلى package - حتى لو كان فارغًا، وجوده كافٍ.",
+                        tipClass: "tip-primary"
+                    },
+                    {
+                        id: "sys_path",
+                        label: "sys.path للمسارات المخصصة",
+                        badge: "badge-warning",
+                        badgeText: "🔧 متقدم",
+                        desc: "عندما تريد استيراد من مسارات غير قياسية أو مجلدات خارج المشروع.",
+                        files: [
+                            {
+                                name: "app.py",
+                                code: `import sys
+import os
+
+# إضافة مسار مخصص
+project_root = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(project_root, 'libs'))
+sys.path.append('/usr/local/mylibs')
+
+# الآن يمكنك استيراد من المسارات المضافة
+from custom_module import helper_function
+
+result = helper_function()
+print(result)`
+                            }
+                        ],
+                        tree: `project/
+├── app.py
+├── libs/
+│   └── custom_module.py
+└── utils/`,
+                        runCmd: "python app.py",
+                        output: "تم تنفيذ helper_function بنجاح",
+                        tip: "⚠️ استخدم هذه الطريقة فقط عند الضرورة - قد تسبب مشاكل في التوافقية.",
+                        tipClass: "tip-danger"
+                    }
+                ]
+            },
+            js: {
+                methods: [
+                    {
+                        id: "require",
+                        label: "require (CommonJS)",
+                        badge: "badge-primary",
+                        badgeText: "⭐ Node.js التقليدي",
+                        desc: "الطريقة الكلاسيكية في Node.js - استخدام require() وmodule.exports.",
+                        files: [
+                            {
+                                name: "calculator.js",
+                                code: `function add(a, b) {
+  return a + b;
+}
+
+function multiply(a, b) {
+  return a * b;
+}
+
+// تصدير الدوال
+module.exports = {
+  add,
+  multiply,
+  version: "1.0.0"
+};`
+                            },
+                            {
+                                name: "app.js",
+                                code: `const { add, multiply, version } = require('./calculator');
+
+console.log('حاسبة الإصدار', version);
+console.log('4 + 6 =', add(4, 6));      // 10
+console.log('5 × 3 =', multiply(5, 3)); // 15`
+                            }
+                        ],
+                        tree: `project/
+├── calculator.js
+├── app.js
+└── package.json`,
+                        runCmd: "node app.js",
+                        output: "حاسبة الإصدار 1.0.0\n4 + 6 = 10\n5 × 3 = 15",
+                        tip: "⚡ لازم تكتب './calculator' - النقطة تخبر Node ابحث في نفس المجلد.",
+                        tipClass: "tip-warning"
+                    },
+                    {
+                        id: "esm",
+                        label: "import/export (ESM)",
+                        badge: "badge-success",
+                        badgeText: "🚀 الحديث",
+                        desc: "الطريقة الحديثة المعتمدة عالميًا - استخدام import/export.",
+                        files: [
+                            {
+                                name: "greet.mjs",
+                                code: `export function greet(name) {
+  return \`مرحبًا، \${name}!\`;
+}
+
+export const VERSION = "2.0.0";
+
+export default {
+  app: "greeting-app"
+};`
+                            },
+                            {
+                                name: "main.mjs",
+                                code: `import { greet, VERSION } from './greet.mjs';
+import config from './greet.mjs';
+
+console.log(greet('سارة'));
+console.log('الإصدار:', VERSION);
+console.log('التطبيق:', config.app);`
+                            },
+                            {
+                                name: "package.json",
+                                code: `{
+  "name": "my-app",
+  "version": "2.0.0",
+  "type": "module"
+}`
+                            }
+                        ],
+                        tree: `project/
+├── package.json ("type": "module")
+├── greet.mjs
+└── main.mjs`,
+                        runCmd: "node main.mjs",
+                        output: "مرحبًا، سارة!\nالإصدار: 2.0.0\nالتطبيق: greeting-app",
+                        tip: "⚡ أضف \"type\": \"module\" في package.json وبكده .js العادية تشتغل زي .mjs.",
+                        tipClass: "tip-success"
+                    },
+                    {
+                        id: "webpack",
+                        label: "Webpack و Bundling",
+                        badge: "badge-secondary",
+                        badgeText: "📦 مشاريع كبيرة",
+                        desc: "استخدام Webpack لدمج عدة ملفات JavaScript في ملف واحد أو عدة ملفات.",
+                        files: [
+                            {
+                                name: "webpack.config.js",
+                                code: `const path = require('path');
+
+module.exports = {
+  mode: 'production',
+  entry: './src/index.js',
+  output: {
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'dist'),
+  },
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: 'babel-loader'
+      }
+    ]
+  }
+};`
+                            },
+                            {
+                                name: "src/index.js",
+                                code: `import { add } from './utils.js';
+import './style.css';
+
+const result = add(5, 3);
+document.body.innerHTML = \`<h1>النتيجة: \${result}</h1>\`;`
+                            },
+                            {
+                                name: "package.json",
+                                code: `{
+  "name": "my-app",
+  "scripts": {
+    "build": "webpack"
+  },
+  "devDependencies": {
+    "webpack": "^5.0.0",
+    "webpack-cli": "^4.0.0"
+  }
+}`
+                            }
+                        ],
+                        tree: `project/
+├── webpack.config.js
+├── package.json
+├── src/
+│   ├── index.js
+│   ├── utils.js
+│   └── style.css
+└── dist/
+    └── bundle.js`,
+                        runCmd: "npm run build",
+                        output: "asset bundle.js 5.2 KB [compared to initial]\nwebpack 5.0.0 compiled",
+                        tip: "⚡ Webpack بيدمج كل الملفات والـ dependencies في ملفات قليلة جاهزة للإنتاج.",
+                        tipClass: "tip-primary"
+                    }
+                ]
+            },
+            html: {
+                methods: [
+                    {
+                        id: "css-link",
+                        label: "ربط ملفات CSS",
+                        badge: "badge-primary",
+                        badgeText: "⭐ الأساسي",
+                        desc: "ربط ملف CSS خارجي بـ HTML باستخدام تاج link في الـ head.",
+                        files: [
+                            {
+                                name: "style.css",
+                                code: `* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Tajawal', Arial, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #333;
+  padding: 2rem;
+}
+
+h1 {
+  color: #fff;
+  text-align: center;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}`
+                            },
+                            {
+                                name: "index.html",
+                                code: `<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>التطبيق</title>
+  <!-- ربط ملف CSS الخارجي -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>مرحبًا بك!</h1>
+  <p>هذا النص مُنسق باستخدام CSS خارجي</p>
+</body>
+</html>`
+                            }
+                        ],
+                        tree: `project/
+├── index.html
+└── style.css`,
+                        runCmd: "افتح index.html في المتصفح",
+                        output: "الصفحة تظهر بتنسيق جميل مع الخلفية المتدرجة",
+                        tip: "⚡ لازم ملف CSS يكون في نفس المجلد أو اكتب المسار الصحيح: href='assets/style.css'.",
+                        tipClass: "tip-warning"
+                    },
+                    {
+                        id: "script",
+                        label: "ربط ملفات JavaScript",
+                        badge: "badge-success",
+                        badgeText: "🎯 التفاعل",
+                        desc: "ربط ملفات JavaScript الخارجية بـ HTML باستخدام تاج script.",
+                        files: [
+                            {
+                                name: "script.js",
+                                code: `document.addEventListener('DOMContentLoaded', () => {
+  const btn = document.getElementById('myBtn');
+  
+  btn.addEventListener('click', () => {
+    alert('تم الضغط على الزر!');
+    console.log('البيان:', new Date().toLocaleString('ar-EG'));
+  });
+});
+
+function addNumbers(a, b) {
+  return a + b;
+}`
+                            },
+                            {
+                                name: "index.html",
+                                code: `<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <title>التطبيق التفاعلي</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>مرحبًا!</h1>
+  <button id="myBtn">اضغط عليّ</button>
+  
+  <!-- ربط ملف JavaScript في نهاية body -->
+  <script src="script.js"></script>
+</body>
+</html>`
+                            }
+                        ],
+                        tree: `project/
+├── index.html
+├── style.css
+└── script.js`,
+                        runCmd: "افتح index.html في المتصفح",
+                        output: "الصفحة تحتوي على زر تفاعلي - اضغط عليه!",
+                        tip: "⚡ ضع تاج script في نهاية body بعد الـ HTML لتحسين الأداء (يحمل الصفحة أولاً).",
+                        tipClass: "tip-success"
+                    },
+                    {
+                        id: "module",
+                        label: "JavaScript Modules في المتصفح",
+                        badge: "badge-secondary",
+                        badgeText: "🚀 حديث",
+                        desc: "استخدام ES6 modules مباشرة في HTML باستخدام type='module'.",
+                        files: [
+                            {
+                                name: "utils.js",
+                                code: `export function formatDate(date) {
+  return date.toLocaleDateString('ar-EG');
+}
+
+export const APP_VERSION = "1.0.0";
+
+export default {
+  name: "MyApp"
+};`
+                            },
+                            {
+                                name: "index.html",
+                                code: `<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <title>Modules في المتصفح</title>
+</head>
+<body>
+  <h1 id="result">جاري التحميل...</h1>
+  
+  <!-- استخدام modules -->
+  <script type="module">
+    import { formatDate, APP_VERSION } from './utils.js';
+    import config from './utils.js';
+    
+    const today = new Date();
+    document.getElementById('result').innerHTML = \`
+      <p>اليوم: \${formatDate(today)}</p>
+      <p>الإصدار: \${APP_VERSION}</p>
+      <p>التطبيق: \${config.name}</p>
+    \`;
+  </script>
+</body>
+</html>`
+                            }
+                        ],
+                        tree: `project/
+├── index.html
+└── utils.js`,
+                        runCmd: "npx serve . (أو VS Code Live Server)",
+                        output: "اليوم: 30/6/2026\nالإصدار: 1.0.0\nالتطبيق: MyApp",
+                        tip: "⚠️ Modules في المتصفح محتاج server محلي - لا تفتح الملف مباشرة! استخدم 'npx serve' أو Live Server.",
+                        tipClass: "tip-danger"
+                    }
+                ]
+            },
+            node: {
+                methods: [
+                    {
+                        id: "pkg",
+                        label: "package.json و npm",
+                        badge: "badge-primary",
+                        badgeText: "⭐ الأساس",
+                        desc: "ملف package.json هو قلب أي مشروع Node.js - يحدد الـ dependencies والإعدادات.",
+                        files: [
+                            {
+                                name: "package.json",
+                                code: `{
+  "name": "my-awesome-app",
+  "version": "1.0.0",
+  "description": "تطبيق Node.js احترافي",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "jest"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "dotenv": "^16.0.3",
+    "mongoose": "^7.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22",
+    "jest": "^29.0.0"
+  }
+}`
+                            },
+                            {
+                                name: "index.js",
+                                code: `const express = require('express');
+require('dotenv').config();
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+app.use(express.json());
+
+app.get('/', (req, res) => {
+  res.json({ message: 'مرحبًا بك!' });
+});
+
+app.listen(PORT, () => {
+  console.log(\`الخادم يعمل على المنفذ \${PORT}\`);
+});`
+                            }
+                        ],
+                        tree: `project/
+├── package.json
+├── index.js
+├── .env
+└── node_modules/ (تُنشأ بعد npm install)`,
+                        runCmd: "npm install\nnpm start",
+                        output: "الخادم يعمل على المنفذ 3000",
+                        tip: "⚡ بعد npm install، مجلد node_modules سيُنشأ تلقائيًا - لا تضيفه على Git!",
+                        tipClass: "tip-warning"
+                    },
+                    {
+                        id: "dotenv",
+                        label: ".env والمتغيرات الحساسة",
+                        badge: "badge-warning",
+                        badgeText: "🔐 الأمان",
+                        desc: "استخدام ملف .env لتخزين المتغيرات الحساسة (Passwords, API Keys) بعيدًا عن الكود.",
+                        files: [
+                            {
+                                name: ".env",
+                                code: `PORT=3000
+DB_URL=mongodb://localhost/mydb
+JWT_SECRET=my_secret_key_here_do_not_share
+API_KEY=sk-abc123xyz
+NODE_ENV=development`
+                            },
+                            {
+                                name: ".env.example",
+                                code: `PORT=3000
+DB_URL=mongodb://localhost/mydb
+JWT_SECRET=your_secret_here
+API_KEY=your_api_key_here
+NODE_ENV=development`
+                            },
+                            {
+                                name: "index.js",
+                                code: `require('dotenv').config();
+
+const PORT = process.env.PORT;
+const DB_URL = process.env.DB_URL;
+const JWT_SECRET = process.env.JWT_SECRET;
+
+console.log('المنفذ:', PORT);
+console.log('DB:', DB_URL);
+
+// لا تطبع الـ secrets في الـ console في production!
+// استخدم logger احترافي بدلاً من console.log`
+                            }
+                        ],
+                        tree: `project/
+├── .env          ← لا ترفعه على Git!
+├── .env.example  ← ارفع هذا بدله
+├── .gitignore
+├── package.json
+└── index.js`,
+                        runCmd: "npm install dotenv\nnode index.js",
+                        output: "المنفذ: 3000\nDB: mongodb://localhost/mydb",
+                        tip: "⚠️ أضف .env في .gitignore فورًا! لا تطبع API Keys أو Passwords أبدًا!",
+                        tipClass: "tip-danger"
+                    },
+                    {
+                        id: "structure",
+                        label: "هيكل المشروع الاحترافي",
+                        badge: "badge-secondary",
+                        badgeText: "📦 العمل الحقيقي",
+                        desc: "تنظيم مشروع Node.js الكبير: routes, controllers, models, middleware.",
+                        files: [
+                            {
+                                name: "controllers/userCtrl.js",
+                                code: `const User = require('../models/User');
+
+const getUsers = async (req, res) => {
+  try {
+    const users = await User.find();
+    res.json({ success: true, data: users });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+};
+
+const createUser = async (req, res) => {
+  const { name, email } = req.body;
+  const user = new User({ name, email });
+  await user.save();
+  res.json({ success: true, data: user });
+};
+
+module.exports = { getUsers, createUser };`
+                            },
+                            {
+                                name: "routes/users.js",
+                                code: `const express = require('express');
+const router = express.Router();
+const { getUsers, createUser } = require('../controllers/userCtrl');
+const auth = require('../middleware/auth');
+
+router.get('/', getUsers);
+router.post('/', auth, createUser);
+
+module.exports = router;`
+                            },
+                            {
+                                name: "middleware/auth.js",
+                                code: `const auth = (req, res, next) => {
+  const token = req.headers.authorization;
+  if (!token) {
+    return res.status(401).json({ error: 'لا يوجد token' });
+  }
+  // التحقق من صحة الـ token
+  req.user = { id: 1 }; // placeholder
+  next();
+};
+
+module.exports = auth;`
+                            },
+                            {
+                                name: "index.js",
+                                code: `const express = require('express');
+const usersRouter = require('./routes/users');
+
+const app = express();
+app.use(express.json());
+
+app.use('/users', usersRouter);
+
+app.listen(3000, () => {
+  console.log('الخادم يعمل على المنفذ 3000');
+});`
+                            }
+                        ],
+                        tree: `project/
+├── index.js
+├── package.json
+├── .env
+├── controllers/
+│   └── userCtrl.js
+├── routes/
+│   └── users.js
+├── models/
+│   └── User.js
+└── middleware/
+    └── auth.js`,
+                        runCmd: "node index.js",
+                        output: "الخادم يعمل على المنفذ 3000",
+                        tip: "⚡ هذا الهيكل يسمى MVC (Model-View-Controller) - يجعل الكود منظم وسهل الصيانة.",
+                        tipClass: "tip-primary"
+                    }
+                ]
+            },
+            docker: {
+                methods: [
+                    {
+                        id: "dockerfile",
+                        label: "Dockerfile الأساسي",
+                        badge: "badge-primary",
+                        badgeText: "⭐ البداية",
+                        desc: "Dockerfile هو وصفة لبناء صورة Docker - زي وصفة الطبخ للتطبيق.",
+                        files: [
+                            {
+                                name: "Dockerfile",
+                                code: `# استخدام صورة Node.js الرسمية
+FROM node:20-alpine
+
+# تعيين مجلد العمل داخل الـ container
+WORKDIR /app
+
+# نسخ package.json و package-lock.json
+COPY package*.json ./
+
+# تثبيت الـ dependencies
+RUN npm install
+
+# نسخ باقي الكود
+COPY . .
+
+# فتح المنفذ 3000
+EXPOSE 3000
+
+# أمر التشغيل
+CMD ["node", "index.js"]`
+                            },
+                            {
+                                name: ".dockerignore",
+                                code: `node_modules
+.env
+.git
+.gitignore
+*.log
+NPM-DEBUG
+.DS_Store`
+                            }
+                        ],
+                        tree: `project/
+├── Dockerfile
+├── .dockerignore
+├── package.json
+└── index.js`,
+                        runCmd: "docker build -t my-app .\ndocker run -p 3000:3000 my-app",
+                        output: "الخادم يعمل داخل Docker على المنفذ 3000",
+                        tip: "⚡ نسخ package.json قبل الكود يسمح لـ Docker بعمل cache لـ npm install وتوفير وقت البناء.",
+                        tipClass: "tip-warning"
+                    },
+                    {
+                        id: "compose",
+                        label: "Docker Compose (App + DB)",
+                        badge: "badge-success",
+                        badgeText: "🎯 في العمل",
+                        desc: "docker-compose.yml لتشغيل عدة containers معًا - التطبيق والقاعدة والـ Redis في أمر واحد.",
+                        files: [
+                            {
+                                name: "docker-compose.yml",
+                                code: `version: '3.8'
+
+services:
+  # تطبيق Node.js
+  app:
+    build: .
+    container_name: my-app
+    ports:
+      - "3000:3000"
+    environment:
+      - DB_URL=mongodb://mongo:27017/mydb
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - mongo
+      - redis
+    volumes:
+      - ./:/app
+      - /app/node_modules
+
+  # قاعدة البيانات MongoDB
+  mongo:
+    image: mongo:7
+    container_name: my-mongo
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: mydb
+    volumes:
+      - mongo_data:/data/db
+
+  # Redis cache
+  redis:
+    image: redis:7-alpine
+    container_name: my-redis
+    ports:
+      - "6379:6379"
+
+volumes:
+  mongo_data:
+    driver: local`
+                            },
+                            {
+                                name: ".env",
+                                code: `PORT=3000
+DB_URL=mongodb://mongo:27017/mydb
+REDIS_URL=redis://redis:6379
+NODE_ENV=development`
+                            }
+                        ],
+                        tree: `project/
+├── docker-compose.yml
+├── .env
+├── Dockerfile
+├── package.json
+└── index.js`,
+                        runCmd: "docker compose up -d\ndocker compose logs -f",
+                        output: "app_1    | الخادم يعمل على المنفذ 3000\nmongo_1  | MongoDB جاهز\nredis_1  | Redis جاهز",
+                        tip: "⚡ depends_on يخبر Docker ترتيب بدء الـ services - app تنتظر mongo و redis أولاً.",
+                        tipClass: "tip-success"
+                    }
+                ]
+            }
+        };
+
+        let currentLang = 'python';
+        let currentMethod = 0;
+        let openTerminals = {};
+
+        function setLang(lang) {
+            currentLang = lang;
+            currentMethod = 0;
+            openTerminals = {};
+            renderLanguages();
+        }
+
+        function renderLanguages() {
+            const langContainer = document.getElementById('langTabs');
+            langContainer.innerHTML = Object.keys(data).map(lang => `
+                <button class="lang-tab ${lang === currentLang ? 'active' : ''}" onclick="setLang('${lang}')">
+                    <i class="ti ti-code"></i> ${lang.toUpperCase()}
+                </button>
+            `).join('');
+            renderMethods();
+        }
+
+        function renderMethods() {
+            const methods = data[currentLang].methods;
+            const methodContainer = document.getElementById('methodTabs');
+            methodContainer.innerHTML = methods.map((m, i) => `
+                <button class="tab ${i === 0 ? 'active' : ''}" onclick="setMethod(${i})">
+                    ${m.label}
+                </button>
+            `).join('');
+            renderContent();
+        }
+
+        function setMethod(idx) {
+            currentMethod = idx;
+            renderMethods();
+        }
+
+        function renderContent() {
+            const m = data[currentLang].methods[currentMethod];
+            const terminalId = `term-${currentLang}-${currentMethod}`;
+            const isOpen = openTerminals[terminalId];
+
+            const filesHtml = m.files
+                .filter(f => f.code)
+                .map((f, idx) => `
+                    <div class="file-box">
+                        <div class="file-header">
+                            <div class="file-name">
+                                <i class="ti ti-file-code"></i>
+                                ${f.name}
+                            </div>
+                            <button class="copy-btn" onclick="copyCode('${idx}-${currentMethod}')">📋 نسخ</button>
+                        </div>
+                        <div class="code-block">
+                            <pre id="code-${idx}-${currentMethod}">${escapeHtml(f.code)}</pre>
+                        </div>
+                    </div>
+                `).join('');
+
+            document.getElementById('content').innerHTML = `
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <h2>${m.label}</h2>
+                            <span class="badge ${m.badge}">${m.badgeText}</span>
+                        </div>
+                    </div>
+
+                    <div class="card-desc">${m.desc}</div>
+
+                    <div class="code-section">
+                        <div class="code-section-title"><i class="ti ti-folder"></i> هيكل المشروع</div>
+                        <div class="tree-structure">
+                            <pre>${escapeHtml(m.tree)}</pre>
+                        </div>
+                    </div>
+
+                    <div class="code-section">
+                        <div class="code-section-title"><i class="ti ti-files"></i> الملفات</div>
+                        <div class="files-grid">${filesHtml}</div>
+                    </div>
+
+                    <div class="terminal-section">
+                        <button class="run-btn" onclick="toggleTerminal('${terminalId}')">
+                            <i class="ti ti-player-play"></i>
+                            ${isOpen ? 'إخفاء' : 'عرض'} طريقة التشغيل
+                        </button>
+
+                        <div class="terminal ${isOpen ? 'show' : ''}" id="${terminalId}">
+                            <div class="terminal-line">
+                                <span class="prompt">$</span>
+                                <span>${m.runCmd}</span>
+                            </div>
+                            <div class="output">${escapeHtml(m.output)}</div>
+                        </div>
+                    </div>
+
+                    <div class="tip-box ${m.tipClass}">
+                        <i class="ti ti-bulb"></i>
+                        <span>${m.tip}</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        function toggleTerminal(id) {
+            openTerminals[id] = !openTerminals[id];
+            renderContent();
+        }
+
+        function copyCode(id) {
+            const code = document.getElementById(`code-${id}`);
+            const text = code.textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('✅ تم نسخ الكود');
+            }).catch(err => {
+                console.error('خطأ:', err);
+            });
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // تهيئة التطبيق
+        renderLanguages();
+    </script>
+</body>
+</html>
